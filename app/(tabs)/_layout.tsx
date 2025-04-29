@@ -1,7 +1,7 @@
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { Tabs } from "expo-router";
-import { Image, ImageBackground, Text, View } from "react-native";
+import { Platform, Image, ImageBackground, Text, View } from "react-native";
 
 interface TabIconProps {
   focused: boolean;
@@ -14,7 +14,7 @@ const TabIcon = ({ focused, icon, title }: TabIconProps) => {
     return (
       <ImageBackground
         source={images.highlight}
-        className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
+        className={`flex flex-row w-full flex-1 min-w-[112px] justify-center items-center rounded-full overflow-hidden ${Platform.OS === "android" ? " min-h-16  mt-6" : " min-h-16  mt-4"}`}
       >
         <Image source={icon} tintColor="#151312" className="size-5" />
         <Text className="text-secondary text-base font-semibold ml-2">
@@ -45,7 +45,7 @@ export default function TabLayout() {
           backgroundColor: "#0f0d23",
           borderRadius: 50,
           marginHorizontal: 20,
-          marginBottom: 36,
+          marginBottom: 60,
           height: 52,
           position: "absolute",
           overflow: "hidden",
