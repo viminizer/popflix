@@ -5,7 +5,7 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
+  const refetch = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -26,11 +26,11 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
 
   useEffect(() => {
     if (autoFetch) {
-      fetchData();
+      refetch();
     }
   }, []);
 
-  return { data, loading, error, refetch: fetchData, reset };
+  return { data, loading, error, refetch, reset };
 };
 
 export default useFetch;

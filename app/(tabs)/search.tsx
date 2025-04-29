@@ -5,7 +5,7 @@ import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,8 +20,20 @@ const Search = () => {
     data: movies,
     loading: moviesLoading,
     error: moviesError,
+    refetch: refetchMovies,
+    reset: resetMovies,
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (searchQuery.trim()) {
+        await refetchMovies();
+      } else {
+        resetMovies();
+      }
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
   return (
     <View className="flex-1 bg-primary">
       <Image
@@ -76,6 +88,15 @@ const Search = () => {
                 </Text>
               )}
           </>
+        }
+        ListEmptyComponent={
+          !moviesLoading && !moviesError ? (
+            <View className="mt-10 px-5">
+              <Text className="text-center text-gray-500">
+                {searchQuery.trim() ? "No movies found" : "Search for a movie"}
+              </Text>
+            </View>
+          ) : null
         }
       />
     </View>
