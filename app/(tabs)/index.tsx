@@ -12,7 +12,6 @@ import {
 import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
 import { fetchMovies } from "@/services/api";
-import MoviesCard from "@/components/MovieCard";
 import MovieCard from "@/components/MovieCard";
 
 export default function Index() {
